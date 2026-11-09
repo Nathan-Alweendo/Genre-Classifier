@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:8000/predict";
+const API_URL = "https://genre-classifier-omrz.onrender.com";
 
 const $ = (id) => document.getElementById(id);
 const form = $("form"), fileInput = $("file"), drop = $("drop");
@@ -105,12 +105,12 @@ form.addEventListener("submit", async (e) => {
 
     submitBtn.disabled = true;
     result.hidden = true;
-    setStatus("Listening to the first 30 seconds...");
+    setStatus("Listening to the first 30 seconds... (the server may take up to a minute to wake up)");
     mode = "analyzing"; sweep = 0;
     if (!reduceMotion) tick(); else draw();
 
     try {
-        const res = await fetch(API_URL, { method: "POST", body });
+        const res = await fetch(`${API_URL}/predict`, { method: "POST", body });
         const data = await res.json();
         if (!res.ok) throw new Error(data.detail || "The server could not process this file.");
         mode = "done";
@@ -119,9 +119,10 @@ form.addEventListener("submit", async (e) => {
         setStatus("");
     } catch (err) {
         mode = "idle";
-        const unreachable = err instanceof TypeError;
+        // TypeError = network/CORS failure; SyntaxError = server returned non-JSON (e.g. a 502 while waking up)
+        const unreachable = err instanceof TypeError || err instanceof SyntaxError;
         setStatus(unreachable
-            ? "Can't reach the API. Start it with: uvicorn app:app --reload"
+            ? "Can't reach the server. It may be waking up, so try again in a few seconds."
             : err.message, true);
     } finally {
         cancelAnimationFrame(raf);
