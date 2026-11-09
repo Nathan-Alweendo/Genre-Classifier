@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genre Guesser</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600&family=Unbounded:wght@500;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+    <h1 id="title">Genre Guesser</h1>
+    <p class="lede">Drop in a song and a model trained on the Free Music Archive will name its genre.</p>
+
+    <form id="form" novalidate>
+        <label for="file" id="drop" class="drop">
+            <input type="file" id="file" accept="audio/*">
+            <span id="drop-title" class="drop-title">Choose a song</span>
+            <span id="drop-hint" class="drop-hint">or drag an audio file here. mp3 and wav work best.</span>
+        </label>
+
+        <div id="stage" class="stage" hidden>
+            <canvas id="wave" aria-hidden="true"></canvas>
+            <audio id="player" controls></audio>
+        </div>
+
+        <button id="submit" type="submit">Guess the genre</button>
+        <p id="status" role="status" aria-live="polite"></p>
+
+        <section id="result" class="result" hidden>
+            <p class="result-label">This sounds like</p>
+            <p id="genre" class="genre"></p>
+            <p class="result-note">Based on the first 30 seconds of the song.</p>
+        </section>
+    </form>
+</main>
+<script src="script.js"></script>
+</body>
+</html>

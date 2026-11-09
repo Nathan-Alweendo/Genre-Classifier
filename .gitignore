@@ -1,0 +1,13 @@
+.venv/
+cache/
+fma_small/
+fma_metadata/
+fma_metadata.zip
+Frontend/node_modules/
+__pycache__/
+*.pyc
+.idea/
+*.mp3
+*.wav
+*.npy
+*.npz

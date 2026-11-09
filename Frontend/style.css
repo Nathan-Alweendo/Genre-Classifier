@@ -1,0 +1,161 @@
+:root {
+    --cobalt: #1b2a8c;
+    --ink: #0e1240;
+    --paper: #f3f1ff;
+    --haze: #aeb6ff;
+    --sun: #ffc93c;
+    --display: "Unbounded", "Arial Black", system-ui, sans-serif;
+    --body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--cobalt);
+    color: var(--paper);
+    font-family: var(--body);
+    font-size: 1.05rem;
+    line-height: 1.55;
+}
+
+main {
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: clamp(2rem, 8vw, 5rem) 1.25rem 4rem;
+}
+
+#title {
+    margin: 0 0 1rem;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(2.2rem, 9vw, 3.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+}
+
+.lede {
+    margin: 0 0 2.5rem;
+    max-width: 32rem;
+    color: var(--haze);
+}
+
+/* ---- file picker ---- */
+.drop {
+    position: relative;
+    display: block;
+    padding: 2rem 1.5rem;
+    border: 2px dashed rgba(243, 241, 255, 0.45);
+    border-radius: 1.25rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+}
+.drop:hover,
+.drop.dragging {
+    border-color: var(--sun);
+    background: rgba(255, 255, 255, 0.06);
+}
+.drop:focus-within {
+    outline: 3px solid var(--sun);
+    outline-offset: 3px;
+}
+.drop input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+.drop-title {
+    display: block;
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 1.15rem;
+    overflow-wrap: anywhere;
+}
+.drop-hint {
+    display: block;
+    margin-top: 0.35rem;
+    color: var(--haze);
+    font-size: 0.95rem;
+}
+
+/* ---- waveform ---- */
+.stage {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 0.9rem;
+    background: var(--ink);
+}
+#wave {
+    display: block;
+    width: 100%;
+    height: 110px;
+}
+#player {
+    display: block;
+    width: 100%;
+    margin-top: 0.75rem;
+    color-scheme: dark;
+}
+
+/* ---- action ---- */
+#submit {
+    display: block;
+    width: 100%;
+    margin-top: 1.25rem;
+    padding: 1rem 1.5rem;
+    border: 0;
+    border-radius: 999px;
+    background: var(--sun);
+    color: var(--ink);
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.12s;
+}
+#submit:hover:not(:disabled) { transform: translateY(-2px); }
+#submit:focus-visible { outline: 3px solid var(--paper); outline-offset: 3px; }
+#submit:disabled { opacity: 0.55; cursor: progress; }
+
+#status {
+    min-height: 1.6em;
+    margin: 0.9rem 0 0;
+    color: var(--haze);
+}
+#status.error { color: #ffd3c9; }
+
+/* ---- result ---- */
+.result {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid rgba(243, 241, 255, 0.25);
+}
+.result-label { margin: 0; color: var(--haze); }
+.genre {
+    margin: 0.2rem 0 0.5rem;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(2.4rem, 11vw, 4.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--sun);
+    overflow-wrap: anywhere;
+    animation: land 0.45s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+.result-note { margin: 0; color: var(--haze); font-size: 0.9rem; }
+
+@keyframes land {
+    from { opacity: 0; transform: translateY(14px) scale(0.96); }
+    to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .genre { animation: none; }
+    #submit, .drop { transition: none; }
+}
