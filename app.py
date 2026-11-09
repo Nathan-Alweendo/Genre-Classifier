@@ -13,14 +13,19 @@ app = FastAPI(title="Genre Classifier API")
 # Enable CORS so your JavaScript frontend can communicate with this API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Adjust this to your frontend's specific URL in production
+    allow_origins=[
+        "https://nathan-alweendo.github.io",
+        "http://localhost:5500", "http://127.0.0.1:5500",
+        "http://localhost:5173", "http://localhost:3000",
+    ],
+    # Adjust this to your frontend's specific URL in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # Load the saved model once at startup
-bundle = joblib.load("genre_model_fma.joblib")
+bundle = joblib.load(os.path.join(os.path.dirname(__file__), "genre_model_fma.joblib"))
 model, cfg, classes = bundle["model"], bundle["cfg"], bundle["classes"]
 
 
